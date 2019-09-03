@@ -1,0 +1,18 @@
+#!/bin/sh
+
+set -e
+
+[ -x /usr/local/bin/docker-binfmt ] && /usr/local/bin/docker-binfmt
+
+[ -x /usr/local/bin/docker-run-pre ] && /usr/local/bin/docker-run-pre
+
+[ -x /usr/local/bin/docker-bootstrap ] && /usr/local/bin/docker-bootstrap
+
+if [ -x /usr/local/bin/docker-run-alt ]; then
+	exec /usr/local/bin/docker-run-alt "${@}"
+else
+	RUN_USER_NAME=${RUN_USER_NAME:-forumi0721}
+	RUN_USER_SHELL=$(grep "^${RUN_USER_NAME}:" /etc/passwd | cut -d ':' -f 7)
+	exec su-exec ${RUN_USER_NAME} ${RUN_USER_SHELL} --login
+fi
+
