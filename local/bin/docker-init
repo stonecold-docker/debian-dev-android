@@ -4,5 +4,24 @@ set -e
 
 LC_ALL=C
 
-docker-install -r -u -c -y procps android-sdk repo signapk signtos ziptime git-core gnupg flex bison gperf build-essential zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z-dev libgl1-mesa-dev libxml2-utils xsltproc unzip ccache
+docker-install -r -u repo procps android-sdk ziptime lib32z-dev \
+	git ccache lzop bison gperf build-essential zip curl zlib1g-dev g++-multilib python-networkx libxml2-utils bzip2 libbz2-dev libghc-bzlib-dev squashfs-tools pngcrush liblz4-tool optipng libc6-dev-i386 gcc-multilib libssl-dev gnupg flex lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z1-dev libgl1-mesa-dev xsltproc unzip python-pip python-dev libffi-dev libxml2-dev libxslt1-dev libjpeg-dev
+#https://nathanpfry.com/how-to-setup-ubuntu-18-04-lts-bionic-beaver-to-compile-android-roms/
+
+#openjdk-8
+mkdir -p /build
+cd /build
+deb_list="$(wget -q -O - http://security-cdn.debian.org/debian-security/pool/updates/main/o/openjdk-8/ | grep  "href=\"openjdk-8.*amd64" | sed -e 's/^.*href="\([^"]*\)".*$/\1/g')"
+#echo "${deb_list}"
+for deb in openjdk-8-jre-headless openjdk-8-jre openjdk-8-jdk-headless openjdk-8-jdk
+do
+	deb_file="$(echo "${deb_list}" | grep "${deb}_" | sort -r | head -1)"
+	wget -q -O /build/${deb}.deb http://security.debian.org/debian-security/pool/updates/main/o/openjdk-8/${deb_file}
+done
+dpkg -i --force-all openjdk-8-jre-headless.deb openjdk-8-jre.deb openjdk-8-jdk-headless.deb openjdk-8-jdk.deb
+apt --fix-broken install -yy
+cd /
+rm -rf /build
+
+docker-install -d -c openjdk-11-jre openjdk-11-jre-headless
 
