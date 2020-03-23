@@ -16,12 +16,12 @@ echo "[$(TZ="GMT-9" date '+%Y-%m-%d %H:%M:%S')] ==> Installing openjdk8"
 #openjdk-8
 mkdir -p /build
 cd /build
-deb_list="$(wget -q -O - http://security-cdn.debian.org/debian-security/pool/updates/main/o/openjdk-8/ | grep  "href=\"openjdk-8.*amd64" | sed -e 's/^.*href="\([^"]*\)".*$/\1/g')"
+deb_list="$(wget --no-check-certificate -q -O - http://security-cdn.debian.org/debian-security/pool/updates/main/o/openjdk-8/ | grep  "href=\"openjdk-8.*amd64" | sed -e 's/^.*href="\([^"]*\)".*$/\1/g')"
 #echo "${deb_list}"
 for deb in openjdk-8-jre-headless openjdk-8-jre openjdk-8-jdk-headless openjdk-8-jdk
 do
 	deb_file="$(echo "${deb_list}" | grep "${deb}_" | sort -r | head -1)"
-	wget -q -O /build/${deb}.deb http://security.debian.org/debian-security/pool/updates/main/o/openjdk-8/${deb_file}
+	wget --no-check-certificate -q -O /build/${deb}.deb http://security.debian.org/debian-security/pool/updates/main/o/openjdk-8/${deb_file}
 done
 dpkg -i --force-all openjdk-8-jre-headless.deb openjdk-8-jre.deb openjdk-8-jdk-headless.deb openjdk-8-jdk.deb
 apt --fix-broken install -yy
