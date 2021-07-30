@@ -1,6 +1,6 @@
-ARG BUILD_ARCH=x64
+#ARG BUILD_TAG=latest
 
-FROM forumi0721debianx64/debian-x64-dev:latest
+FROM forumi0721/debian-x64-dev:latest
 
 LABEL maintainer="forumi0721@gmail.com"
 
