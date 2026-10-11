@@ -5,8 +5,8 @@
 
 
 ----------------------------------------
-### x64
-![Docker Image Size](https://img.shields.io/docker/image-size/forumi0721/debian-dev-android/x64)
+### amd64
+![Docker Image Size (tag)](https://img.shields.io/docker/image-size/forumi0721/debian-dev-android/latest?arch=amd64)
 
 
 
@@ -14,8 +14,8 @@
 #### Description
 
 * Distribution : [Debian GNU/Linux](https://www.debian.org/)
-* Architecture : x64
-* Appplication : -
+* Architecture : amd64
+* Application : -
     - Android development environment
 
 
@@ -26,7 +26,7 @@
 ```sh
 docker run -i -t --rm \
            -e RUN_USER_NAME=<user_name> \
-           forumi0721/debian-dev-android:[ARCH_TAG]
+           forumi0721/debian-dev-android:latest
 ```
 
 

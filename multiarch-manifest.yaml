@@ -1,6 +1,0 @@
-image: forumi0721/debian-dev-android:latest
-manifests:
-  - image: forumi0721/debian-dev-android:x64
-    platform:
-      architecture: amd64
-      os: linux
